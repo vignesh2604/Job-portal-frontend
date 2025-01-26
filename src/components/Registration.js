@@ -8,6 +8,7 @@ import {
   Button,
   Input,
   VStack,
+  useToast,
   FormControl,
   FormLabel,
   FormErrorMessage,
@@ -29,6 +30,8 @@ const Registration = () => {
   const navigate = useNavigate(); 
   const [error, setError] = useState('');
 
+  const toast = useToast()
+
   // Form submission handler
   const onSubmit = async(data) => {
     if (data.userType === "Jobseeker")
@@ -48,9 +51,17 @@ const Registration = () => {
     try {
       const response = await axios.post(BASE_URL + '/users/user/', data);
       console.log("Response from server:" + response.status);
-      alert("Registration Successful!");
+      toast({
+        title: 'Registration success',
+        description: `Routing to login..`,
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
       // After successful registration, navigate to login
-      navigate("/");
+      setTimeout(() => {
+      navigate('/');
+    }, 2000); 
     }
     
     catch (error) {
@@ -63,7 +74,6 @@ const Registration = () => {
         console.error(error.message);
         setError(error.message);
       }
-      
     }
   };
 

@@ -11,6 +11,7 @@ import {
   FormLabel,
   FormErrorMessage,
   Heading,
+  useToast,
 } from "@chakra-ui/react";
 
 // To navigate to home page after succesful login
@@ -23,6 +24,8 @@ const BASE_URL = "http://localhost:8000";
 
 
 function Login() {
+
+  const toast = useToast();
 
   const navigate = useNavigate();
 
@@ -39,9 +42,16 @@ function Login() {
         localStorage.setItem('accesstoken', access);
         localStorage.setItem('refreshtoken', refresh);
         localStorage.setItem('current_user', data.username);
-        alert("Login Successful!");
-        navigate('/home');  
-
+        toast({
+          title: 'Login success',
+          description: `User logged in sucessfully.`,
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+        setTimeout(() => {
+          navigate('/home');
+        }, 2000);  
     }
 
     catch (error) {
