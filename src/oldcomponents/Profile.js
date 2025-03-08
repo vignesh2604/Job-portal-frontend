@@ -62,9 +62,10 @@ const Profile = () => {
   }, []);
 
   const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      setSelectedImage(URL.createObjectURL(file));
+    const selectedImage = event.target.files[0];
+    console.log("Image name:" + selectedImage);
+    if (img && img.type.startsWith('image/')) {
+      setSelectedImage(URL.createObjectURL(selectedImage));
       toast({
         title: 'Image selected',
         description: `Profile picture uploaded successfully.`,
@@ -112,7 +113,7 @@ const Profile = () => {
     try {
       const id = localStorage.getItem('user_id');
       const usertype = localStorage.getItem('usertype');
-
+      console.log('updatedData::' + updatedData);
       if (isProfileExisting) {
         // Update existing profile
         await api.put(`users/${usertype}/${id}/`, updatedData);
